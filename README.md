@@ -4,3 +4,8 @@
 ```
 composer create-project laravel/laravel l10-ui-vue3-auth
 ```
+2.  Install the frontend packeges
+```
+npm install @vitejs/plugin-vue vue vue-router bootstrap
+npm run dev
+```
