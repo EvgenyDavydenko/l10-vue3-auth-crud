@@ -1,20 +1,22 @@
 <template>
     <div class="container">
-        <header>
-            <div class="px-3 py-2 bg-dark text-white">
+        <header class="p-3 text-bg-dark">
             <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <router-link to="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                    Домой
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                Домой
                 </router-link>
-                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                    <li>
-                        <router-link to="/about" class="nav-link text-white" style="text-decoration: none; color: white;">
-                            О нас
-                        </router-link>
-                    </li>
+
+                <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center mb-md-0">
+
+                    <li><router-link to="/about" class="nav-link px-2 text-white">О нас</router-link></li>
+                    <li><router-link to="/register" class="nav-link px-2 text-white">Регистрация</router-link></li>
+                    <li><router-link to="/login" class="nav-link px-2 text-white">Войти</router-link></li>
+                    <li><a @click.prevent="logout" class="nav-link px-2 text-white">Выйти</a></li>
+
                 </ul>
-                </div>
+
+
             </div>
             </div>
         </header>
@@ -26,7 +28,20 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
-        name: 'App'
+        name: 'App',
+        methods: {
+            logout() {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                }
+                axios.get('/api/logout').then(res => {
+                    localStorage.removeItem('token');
+                    this.$router.push({name: 'login'});
+                })
+            }
+        }
     }
 </script>
