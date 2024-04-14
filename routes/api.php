@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,11 @@ Route::post("login", [AuthController::class, "login"]);
 Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("profile", [AuthController::class, "profile"]);
     Route::get("logout", [AuthController::class, "logout"]);
+
+    Route::post("create-project", [ProjectController::class, "createProject"]);
+    Route::get("list-project", [ProjectController::class, "listProject"]);
+    Route::get("single-project/{id}", [ProjectController::class, "singleProject"]);
+    Route::delete("delete-project/{id}", [ProjectController::class, "deleteProject"]);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
